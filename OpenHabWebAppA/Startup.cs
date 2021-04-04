@@ -67,7 +67,11 @@ namespace OpenHabWebAppA
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    // Launch Angular development web server every application start - consumes additional time :-(
+                    //// spa.UseAngularCliServer(npmScript: "start");
+
+                    // Uses proxy to development web server - faster :-(
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
