@@ -19,5 +19,5 @@ if (environment.production) {
 platformBrowserDynamic(providers).bootstrapModule(AppModule)
   .catch(err => console.log(err));
 
-// Added by Angular update from 8 to 9, which causes frozen on start up
+// Added by Angular update from 8 to 9, which causes client app frozen on start up
 //export { renderModule, renderModuleFactory } from '@angular/platform-server';
