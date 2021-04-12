@@ -10,6 +10,8 @@ namespace OpenHabWebAppA
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +27,18 @@ namespace OpenHabWebAppA
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+            // Apply a CORS policy to all the app's endpoints with the specified origins 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
+                {
+                    builder.WithOrigins(
+                        "http://localhost:5000", "https://localhost:5001",
+                        "http://localhost:34160", "https://localhost:44350")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             });
         }
 
