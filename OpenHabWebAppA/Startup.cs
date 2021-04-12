@@ -23,11 +23,13 @@ namespace OpenHabWebAppA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            
             // Apply a CORS policy to all the app's endpoints with the specified origins 
             services.AddCors(options =>
             {
@@ -40,6 +42,9 @@ namespace OpenHabWebAppA
                         .AllowAnyMethod();
                 });
             });
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +70,18 @@ namespace OpenHabWebAppA
             {
                 app.UseSpaStaticFiles();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "api/swagger/{documentname}/swagger.json";
+            });
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "My Cool API V1");
+                c.RoutePrefix = "api/swagger";
+            });
 
             app.UseRouting();
 
