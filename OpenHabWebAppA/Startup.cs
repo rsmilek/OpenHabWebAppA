@@ -2,9 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenHabWebApp.Data;
+using OpenHabWebApp.Domain;
+using System;
+using System.Linq;
 
 namespace OpenHabWebAppA
 {
@@ -22,6 +27,11 @@ namespace OpenHabWebAppA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var databaseSection = Configuration.GetSection(DataConfiguration.Section);
+            services.Configure<DataConfiguration>(databaseSection);
+            services.AddDbContext<DataContext>(optionsBuilder =>
+                optionsBuilder.UseSqlite(databaseSection.Get<DataConfiguration>().ConnectionString));
+
             services.AddControllersWithViews();
             
             // In production, the Angular files will be served from this directory
@@ -48,7 +58,7 @@ namespace OpenHabWebAppA
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
             if (env.IsDevelopment())
             {
@@ -108,6 +118,16 @@ namespace OpenHabWebAppA
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
+
+
+
+            dataContext.Database.EnsureDeleted();
+            dataContext.Database.EnsureCreated();
+            dataContext.Esp32camImages.Add(new Esp32camImage() { CreatedAt = new DateTime(2020, 11, 8, 11, 40, 0), Name = "Pokus 1" });
+            dataContext.Esp32camImages.Add(new Esp32camImage() { CreatedAt = new DateTime(2020, 11, 8, 11, 50, 0), Name = "Pokus 2" });
+            dataContext.SaveChanges();
+
+            var imgs = dataContext.Esp32camImages.ToList();
         }
     }
 }
