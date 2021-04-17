@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using OpenHabWebApp.Data;
 using OpenHabWebApp.Domain;
 using OpenHabWebApp.Extensions;
@@ -23,7 +19,7 @@ namespace OpenHabWebAppA
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>This method gets called by the runtime. Use this method to add services to the container.</summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDataService(Configuration);
@@ -33,7 +29,7 @@ namespace OpenHabWebAppA
             services.AddSwaggerGen(); // Register the Swagger generator, defining 1 or more Swagger documents
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
             app.ConfigureExceptionPage(env);
