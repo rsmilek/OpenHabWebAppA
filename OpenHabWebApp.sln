@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHabWebAppA", "OpenHabWebAppA\OpenHabWebAppA.csproj", "{4612D355-6AD4-4AF9-A44F-D339232DAE3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHabWebApp", "OpenHabWebApp\OpenHabWebApp.csproj", "{4612D355-6AD4-4AF9-A44F-D339232DAE3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHabWebApp.Domain", "OpenHabWebApp.Domain\OpenHabWebApp.Domain.csproj", "{22AA0089-24A6-44CA-ABCF-06E663FA24BC}"
 EndProject
